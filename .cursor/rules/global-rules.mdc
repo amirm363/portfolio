@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Structure & Best Practices
+
+## Project Organization
+- Components should be organized in `app/components/` with atomic design principles (atoms, molecules, organisms)
+- Page sections should be in `app/sections/` (Header, Hero, Projects, Contact, Footer)
+- Use Next.js App Router with page.tsx files in appropriate directories
+- Keep API routes in `app/api/` directory
+
+## TypeScript
+- Create type definitions in `types/` directory
+- Use proper interfaces for form data, API responses, and props
+- Avoid `any` type - use proper typing for all variables and functions
+
+## Styling
+- Use shadcn/ui components with consistent styling
+- Follow Tailwind best practices (use utility classes, avoid custom CSS when possible)
+- Maintain responsive design with mobile-first approach
+- Create reusable UI components
+
+## Form Implementation
+- Use react-hook-form for form state management
+- Implement zod validation schemas in separate files
+- Handle loading, success, and error states properly
+- Create reusable form components
+
+## API Integration
+- Create Airtable API service in `services/airtable.ts`
+- Use environment variables for API keys (.env.local)
+- Implement proper error handling for API calls
+- Create webhooks in `app/api/webhook/` directory
+
+## Performance & Accessibility
+- Follow accessibility guidelines (ARIA attributes, semantic HTML)
+- Implement proper meta tags for SEO
+- Optimize images with Next.js Image component
+- Use proper heading hierarchy (h1, h2, etc.)
