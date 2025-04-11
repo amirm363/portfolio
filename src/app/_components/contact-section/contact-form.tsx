@@ -50,7 +50,7 @@ export default function ContactForm() {
 
   return (
     <>
-      <form action={formAction} className="space-y-4 max-w-xl mx-auto">
+      <form action={formAction} className="space-y-4 max-w-xl mx-auto py-10">
         <div className="grid grid-cols-2 gap-4">
           <Input
             type="text"
@@ -72,7 +72,7 @@ export default function ContactForm() {
             {...form.register("message")}
             onChange={handleChange}
             className="col-span-2"
-            rows={10}
+            rows={5}
           />
           <FormSubmitButton className="col-span-2">Submit</FormSubmitButton>
         </div>

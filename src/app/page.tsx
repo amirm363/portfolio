@@ -15,25 +15,25 @@ export default async function Home() {
   }
   return (
     <main className="h-dvh snap-y snap-mandatory">
-      <div className="flex flex-col">
-        <SectionWrapper className="flex flex-col gap-10">
+      <div className="">
+        <SectionWrapper id="about" className="flex flex-col gap-10">
           <HeroSection user={user} />
-          <SkillsSection skills={user.skills} />
         </SectionWrapper>
 
         {/* <SectionWrapper className="min-h-0">
         </SectionWrapper> */}
 
-        <SectionWrapper>
+        <SectionWrapper id="experience">
           <ExperienceSection experiences={user.experience} />
         </SectionWrapper>
 
-        <SectionWrapper>
+        <SectionWrapper id="projects">
           <ProjectsSection projects={user.projects} />
         </SectionWrapper>
 
-        <SectionWrapper>
+        <SectionWrapper id="contact" className="flex flex-col min-h-dvh">
           <ContactSection />
+          <SkillsSection skills={user.skills} />
         </SectionWrapper>
       </div>
     </main>

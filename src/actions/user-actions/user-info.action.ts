@@ -7,6 +7,7 @@ import { unstable_cache } from "next/cache";
 const getCachedUserConfig = unstable_cache(
   async (userId: string) => {
     try {
+      console.log("EXPENSIVE OPERATION LOG");
       return await getUserConfig(userId);
     } catch (error) {
       console.error("Error fetching user config:", error);

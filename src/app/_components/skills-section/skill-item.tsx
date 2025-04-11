@@ -9,7 +9,6 @@ interface SkillItemProps {
 }
 
 export default function SkillItem({ skill, className }: SkillItemProps) {
-  console.log("🚀 ~ skill-item.tsx:6 ~ SkillItem ~ skill:", skill);
   return (
     <div
       className={cn(

@@ -6,27 +6,33 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import useIsScrolled from "@/lib/hooks/use-is-scrolled";
 import dynamic from "next/dynamic";
+import { UserConfig } from "@/lib/types/user.types";
+import MobileHeader from "./mobile-header";
 
 const ThemeSwitcher = dynamic(() => import("./theme-switcher"), {
   ssr: false,
   loading: () => <div className="w-9 h-9" />,
 });
 
-export default function Header() {
+interface HeaderProps {
+  user: UserConfig | undefined;
+}
+
+export default function Header({ user }: HeaderProps) {
   const { isScrolled } = useIsScrolled({ threshold: 50 });
-  console.log("🚀 ~ header.tsx:17 ~ Header ~ isScrolled:", isScrolled);
+
   return (
     <header
       className={cn(
-        "fixed flex items-center justify-center top-0 left-0 right-0 z-50 bg-brand/10 backdrop-blur-sm ",
+        "fixed flex items-center md:justify-center top-0 left-0 right-0 z-50 bg-brand/10 backdrop-blur-sm px-4",
         "border-b border-border/20",
         "transition-all duration-200 ease-in-out",
         isScrolled
-          ? "border border-border/80 h-16 top-7 left-14 right-14 max-w-3xl mx-auto  rounded-3xl px-2 "
+          ? "border border-border/80 h-16 top-7 left-14 right-14 max-w-3xl mx-auto  rounded-3xl px-4 "
           : "border-b  h-16 "
       )}
     >
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto md:flex justify-around items-center hidden ">
         <Link href="/">
           <Image
             src="/images/logo.png"
@@ -37,19 +43,20 @@ export default function Header() {
           />
         </Link>
         <div className="flex items-center gap-10 ">
-          {Array.from({ length: 5 }).map((_, index) => (
+          {user?.navigationLinks.map((link, index) => (
             <a
-              href="#"
+              href={`#${link.url}`}
               key={index}
-              className="relative text-sm font-medium group  hover:-translate-y-1 transition-all duration-200 ease-in-out  rounded-full  py-2"
+              className="relative  hover:drop-shadow-xl hover:drop-shadow-brand/70 text-sm font-medium group  hover:-translate-y-1 transition-transform duration-200 ease-in-out  rounded-full  py-2"
             >
-              <div className="absolute -inset-1 rounded-full group-hover:bg-gradient-to-t from-brand/20 to-brand/10"></div>
-              Test
+              {link.name}
             </a>
           ))}
         </div>
         <ThemeSwitcher />
       </div>
+
+      <MobileHeader navigationLinks={user?.navigationLinks || []} />
     </header>
   );
 }

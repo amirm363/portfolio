@@ -14,10 +14,7 @@ export default function ProjectsSection({
   subtitle = "A showcase of my recent work and experiments",
 }: ProjectsSectionProps) {
   return (
-    <section
-      id="projects"
-      className="min-h-dvh flex w-full flex-col items-center justify-center  "
-    >
+    <section className="min-h-dvh flex w-full flex-col items-center justify-center  ">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-3">{title}</h2>

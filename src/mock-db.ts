@@ -131,12 +131,12 @@ const users: UserConfig[] = [
         url: "about",
       },
       {
-        name: "Projects",
-        url: "projects",
-      },
-      {
         name: "Experience",
         url: "experience",
+      },
+      {
+        name: "Projects",
+        url: "projects",
       },
       {
         name: "Contact",
