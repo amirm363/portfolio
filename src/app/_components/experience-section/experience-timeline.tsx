@@ -18,7 +18,7 @@ export default function ExperienceTimeline({
   }
 
   return (
-    <div className="py-6">
+    <div className="not-last:py-6">
       {experiences.map((experience, index) => (
         <ExperienceCard
           key={`${experience.company}-${index}`}

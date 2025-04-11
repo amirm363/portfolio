@@ -17,7 +17,7 @@ export default function ProjectCard({ project, className }: ProjectCardProps) {
   return (
     <div
       className={cn(
-        "group rounded-lg overflow-hidden border bg-card shadow-sm hover:shadow-md transition-all duration-300 max-w-96",
+        "group rounded-lg overflow-hidden border bg-card shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-[320px]",
         className
       )}
     >
