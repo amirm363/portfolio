@@ -16,7 +16,7 @@ export default function ProjectsSection({
   return (
     <section
       id="projects"
-      className="py-16 min-h-dvh flex w-full flex-col items-center justify-center  "
+      className="min-h-dvh flex w-full flex-col items-center justify-center  "
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">

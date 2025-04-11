@@ -1,3 +1,3 @@
-import * as userActions from "./get-info.action";
+import * as userActions from "./user-info.action";
 
 export default userActions;

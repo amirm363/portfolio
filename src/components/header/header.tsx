@@ -14,6 +14,7 @@ const ThemeSwitcher = dynamic(() => import("./theme-switcher"), {
 
 export default function Header() {
   const { isScrolled } = useIsScrolled({ threshold: 50 });
+  console.log("🚀 ~ header.tsx:17 ~ Header ~ isScrolled:", isScrolled);
   return (
     <header
       className={cn(

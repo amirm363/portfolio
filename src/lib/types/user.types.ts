@@ -43,6 +43,11 @@ export type NavigationLink = {
   url: string;
 };
 
+export type Skill = {
+  name: string;
+  icon: string;
+};
+
 export type UserConfig = {
   id: string;
   name: string;
@@ -50,7 +55,7 @@ export type UserConfig = {
   socialLinks: SocialLink[];
   profilePicture: string;
   bio: string;
-  skills: string[];
+  skills: Skill[];
   experience: Experience[];
   // education: Education[];
   projects: Project[];

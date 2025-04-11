@@ -42,6 +42,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --color-brand: var(--brand);
+  --animate-marquee: marquee;
+  --animate-marquee2: marquee2;
 }
 
 :root {
@@ -157,5 +159,33 @@
 
   h6 {
     @apply text-base md:text-lg lg:text-xl;
+  }
+}
+
+@layer utilities {
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes marquee2 {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  .animate-marquee2 {
+    animation: marquee2 25s linear infinite;
   }
 }

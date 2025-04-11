@@ -10,7 +10,7 @@ interface HeroContentProps {
 
 export default function HeroContent({ user }: HeroContentProps) {
   return (
-    <div className="max-w-xl space-y-6 text-center md:text-left animate-in fade-in-50 slide-in-from-left-40 duration-700">
+    <div className="max-w-xl space-y-6 text-center md:text-left animate-in fade-in-50 slide-in-from-left-40 duration-700 flex-1">
       <div className="space-y-3">
         <p className="text-primary font-medium">Hello, I&apos;m</p>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">

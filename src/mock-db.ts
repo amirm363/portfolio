@@ -37,12 +37,50 @@ const users: UserConfig[] = [
     profilePicture: "/images/profile-pic.png",
     bio: "I am a full stack developer with a passion for building scalable and efficient web applications.",
     skills: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Node.js",
-      "Express",
+      {
+        name: "React",
+        icon: "react",
+      },
+      {
+        name: "Next.js",
+        icon: "nextjs",
+      },
+      {
+        name: "Node.js",
+        icon: "nodejs",
+      },
+      {
+        name: "TypeScript",
+        icon: "typescript",
+      },
+      {
+        name: "Python",
+        icon: "python",
+      },
+      {
+        name: "Docker",
+        icon: "docker",
+      },
+      {
+        name: "Tailwind CSS",
+        icon: "tailwindcss",
+      },
+      {
+        name: "PostgreSQL",
+        icon: "postgresql",
+      },
+      {
+        name: "MongoDB",
+        icon: "mongodb",
+      },
+      {
+        name: "Git",
+        icon: "git",
+      },
+      {
+        name: "GCP",
+        icon: "gcp",
+      },
     ],
     projects: [
       {
@@ -87,7 +125,6 @@ const users: UserConfig[] = [
         ],
       },
     ],
-
     navigationLinks: [
       {
         name: "About",

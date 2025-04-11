@@ -3,9 +3,10 @@ import { useState } from "react";
 import { z } from "zod";
 import { handleSessionStorage } from "@/lib/utils";
 
-type SubmitAction = (data: FormData) => Promise<
+type SubmitAction<T extends z.ZodTypeAny> = (data: z.infer<T>) => Promise<
   | {
       error: string;
+
       success?: undefined;
     }
   | {
@@ -16,16 +17,13 @@ type SubmitAction = (data: FormData) => Promise<
 
 interface UseFormSubmitProps<FormSchema extends z.ZodTypeAny> {
   schema: FormSchema;
-  onSubmitAction: SubmitAction;
+  onSubmitAction: SubmitAction<FormSchema>;
   formId: string;
-  clearAfterSubmit?: boolean;
 }
 
 interface UseFormSubmitReturn {
   handleSubmit: (data: FormData) => Promise<void>;
-  isSuccess: boolean;
-  isError: boolean;
-  error: Error | null;
+  isSuccess: { success: boolean; message: string };
   reset: () => void;
 }
 
@@ -33,11 +31,8 @@ export default function useFormSubmit<T extends z.ZodTypeAny>({
   schema,
   onSubmitAction,
   formId,
-  clearAfterSubmit = true,
 }: UseFormSubmitProps<T>): UseFormSubmitReturn {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [isSuccess, setIsSuccess] = useState({ success: false, message: "" });
 
   const saveFormToSessionStorage = (data: z.infer<T>) => {
     // Save each field individually
@@ -68,9 +63,7 @@ export default function useFormSubmit<T extends z.ZodTypeAny>({
   };
 
   const reset = () => {
-    setIsSuccess(false);
-    setIsError(false);
-    setError(null);
+    setIsSuccess({ success: false, message: "" });
   };
 
   const handleSubmit = async (data: FormData) => {
@@ -78,7 +71,21 @@ export default function useFormSubmit<T extends z.ZodTypeAny>({
 
     try {
       // Validate data against schema
-      const validatedData = schema.parse(data);
+      const formObject = Object.fromEntries(data.entries());
+      console.log("Form data object:", formObject);
+
+      const validatedData = schema.safeParse(formObject);
+      console.log(
+        "🚀 ~ use-form-submit.ts:74 ~ handleSubmit ~ validatedData:",
+        validatedData
+      );
+      if (!validatedData.success) {
+        setIsSuccess({
+          success: false,
+          message: `Form submission error: ${validatedData.error.issues[0].message}`,
+        });
+        return;
+      }
 
       // Save form data to session storage before submission
       saveFormToSessionStorage(validatedData);
@@ -87,16 +94,14 @@ export default function useFormSubmit<T extends z.ZodTypeAny>({
       await onSubmitAction(validatedData);
 
       // Handle success
-      setIsSuccess(true);
+      setIsSuccess({ success: true, message: "Form submitted successfully" });
 
-      // Clear form data if necessary
-      if (clearAfterSubmit) {
-        clearFormFromSessionStorage();
-      }
+      // Clear form data if necessary form is submitted successfully
+      clearFormFromSessionStorage();
     } catch (e) {
       // Handle errors
-      setIsError(true);
-      setError(e as Error);
+      setIsSuccess({ success: false, message: "Form submission error" });
+
       console.error("Form submission error:", e);
     }
   };
@@ -104,8 +109,6 @@ export default function useFormSubmit<T extends z.ZodTypeAny>({
   return {
     handleSubmit,
     isSuccess,
-    isError,
-    error,
     reset,
   };
 }

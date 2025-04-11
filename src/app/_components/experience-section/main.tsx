@@ -16,7 +16,7 @@ export default function ExperienceSection({
   return (
     <section
       id="experience"
-      className="py-16 bg-muted/30 rounded-3xl min-h-dvh flex items-center justify-center flex-col"
+      className="bg-muted/30 rounded-3xl min-h-dvh flex items-center justify-center flex-col"
     >
       <div className="container mx-auto px-4">
         <div className="mb-12">
