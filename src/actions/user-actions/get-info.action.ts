@@ -25,7 +25,7 @@ const getCachedUserConfig = unstable_cache(
 export async function getInfo() {
   const userId = process.env.USER_ID;
   if (!userId) {
-    throw new Error("User ID is not set");
+    return undefined;
   }
 
   try {
@@ -35,6 +35,6 @@ export async function getInfo() {
     return user;
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to get user config");
+    return undefined;
   }
 }
