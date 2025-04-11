@@ -14,7 +14,7 @@ export default async function Home() {
     throw new Error("User not found");
   }
   return (
-    <main className="h-dvh snap-y snap-mandatory">
+    <main className="h-dvh ">
       <div>
         <SectionWrapper
           id="about"

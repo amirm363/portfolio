@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 export default function Header({ user }: HeaderProps) {
-  const { isScrolled } = useIsScrolled({ threshold: 50 });
+  const { isScrolled, isScrollingUp } = useIsScrolled({ threshold: 50 });
 
   return (
     <header
@@ -29,7 +29,8 @@ export default function Header({ user }: HeaderProps) {
         "transition-all duration-200 ease-in-out",
         isScrolled
           ? "border border-border/80 h-16 top-7 left-14 right-14 max-w-3xl mx-auto  rounded-3xl px-4 "
-          : "border-b  h-16 "
+          : "border-b  h-16 ",
+        !isScrollingUp ? "-translate-y-[150%]" : "translate-y-0"
       )}
     >
       <div className="container mx-auto md:flex justify-around items-center hidden ">

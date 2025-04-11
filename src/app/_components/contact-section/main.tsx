@@ -8,6 +8,7 @@ interface ContactSectionProps {
 }
 
 function ContactSection({ contactInfo }: ContactSectionProps) {
+  console.log("🚀 ~ main.tsx:11 ~ ContactSection ~ contactInfo:", contactInfo);
   return (
     <div className="flex flex-col items-center justify-center container mx-auto space-y-10 max-w-[95vw]">
       <ContactHeader />
