@@ -1,3 +1,3 @@
-import * as userActions from "./user-info.action";
-
-export default userActions;
+import * as userInfo from "./user-info.action";
+import * as contactUser from "./contact-user.action";
+export const userActions = { ...userInfo, ...contactUser };

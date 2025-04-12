@@ -57,7 +57,6 @@ export type UserConfig = {
   bio: string;
   skills: Skill[];
   experience: Experience[];
-  // education: Education[];
   projects: Project[];
   navigationLinks: NavigationLink[];
 };

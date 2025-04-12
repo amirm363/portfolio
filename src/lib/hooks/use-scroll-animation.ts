@@ -6,12 +6,15 @@ export function useScrollAnimation() {
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
           // Once the animation has played, we can disconnect the observer
-          if (ref.current) observer.unobserve(ref.current);
+          if (element) observer.unobserve(element);
         }
       },
       {
@@ -21,12 +24,12 @@ export function useScrollAnimation() {
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (element) {
+      observer.observe(element);
     }
 
     return () => {
-      if (ref.current) observer.unobserve(ref.current);
+      if (element) observer.unobserve(element);
     };
   }, []);
 

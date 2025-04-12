@@ -12,7 +12,7 @@ import { contactUser } from "@/actions/user-actions/contact-user.action";
 import SubmitStatus from "@/components/submit-status";
 import useSessionHook from "@/lib/hooks/use-session-hook";
 import { Mail, User, MessageSquare } from "lucide-react";
-
+import FormInput from "./form-input";
 type FormValues = z.infer<typeof contactSchema>;
 
 const formId = "contact-form";
@@ -53,10 +53,7 @@ export default function ContactForm() {
     <>
       <form action={formAction} className="space-y-6 w-full max-w-[400px]">
         <div className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium">
-              Name
-            </label>
+          <FormInput label="Name" name="name">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <User className="h-4 w-4 text-muted-foreground" />
@@ -75,12 +72,9 @@ export default function ContactForm() {
                 {form.formState.errors.name.message}
               </p>
             )}
-          </div>
+          </FormInput>
 
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
+          <FormInput label="Email" name="email">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Mail className="h-4 w-4 text-muted-foreground" />
@@ -99,12 +93,9 @@ export default function ContactForm() {
                 {form.formState.errors.email.message}
               </p>
             )}
-          </div>
+          </FormInput>
 
-          <div className="space-y-2">
-            <label htmlFor="message" className="text-sm font-medium">
-              Message
-            </label>
+          <FormInput label="Message" name="message">
             <div className="relative">
               <div className="absolute top-3 left-3 pointer-events-none">
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
@@ -116,13 +107,13 @@ export default function ContactForm() {
                 {...form.register("message")}
                 onChange={handleChange}
               />
+              {form.formState.errors.message && (
+                <p className="text-xs text-destructive mt-1">
+                  {form.formState.errors.message.message}
+                </p>
+              )}
             </div>
-            {form.formState.errors.message && (
-              <p className="text-xs text-destructive mt-1">
-                {form.formState.errors.message.message}
-              </p>
-            )}
-          </div>
+          </FormInput>
         </div>
         <FormSubmitButton className="w-full">Send Message</FormSubmitButton>
 

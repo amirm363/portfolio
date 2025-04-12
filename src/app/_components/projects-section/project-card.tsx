@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import { Project } from "@/lib/types/user.types";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ExternalLinkIcon } from "lucide-react";
-
+import { useScrollAnimation } from "@/lib/hooks/use-scroll-animation";
 interface ProjectCardProps {
   project: Project;
   className?: string;
@@ -13,12 +14,15 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, className }: ProjectCardProps) {
   const { name, description, image, url, technologies } = project;
+  const { ref, isInView } = useScrollAnimation();
 
   return (
     <div
+      ref={ref}
       className={cn(
-        "group rounded-lg overflow-hidden border bg-card shadow-sm hover:shadow-md transition-all duration-300 w-full max-w-[320px]",
-        className
+        "group rounded-lg overflow-hidden border bg-card shadow-sm hover:shadow-md transition-all duration-500 w-full max-w-[320px] opacity-0",
+        className,
+        isInView && "animate-in slide-in-from-bottom-25 fade-in-10 opacity-100"
       )}
     >
       <div className="relative h-48 w-full">

@@ -1,7 +1,9 @@
+"use client";
 import { Experience } from "@/lib/types/user.types";
 import React from "react";
 import { CalendarIcon, BriefcaseIcon } from "lucide-react";
-
+import { useScrollAnimation } from "@/lib/hooks/use-scroll-animation";
+import { cn } from "@/lib/utils";
 interface ExperienceCardProps {
   experience: Experience;
   isLast?: boolean;
@@ -12,6 +14,7 @@ export default function ExperienceCard({
   isLast = false,
 }: ExperienceCardProps) {
   const { company, position, startDate, endDate, description } = experience;
+  const { ref, isInView } = useScrollAnimation();
 
   // Format dates for display
   const formattedStartDate = new Date(startDate).toLocaleDateString("en-US", {
@@ -28,7 +31,13 @@ export default function ExperienceCard({
         });
 
   return (
-    <div className="relative pl-8 pb-12">
+    <div
+      ref={ref}
+      className={cn(
+        "relative pl-8 pb-12 transition-all duration-500 opacity-0",
+        isInView && "animate-in slide-in-from-bottom-25 fade-in-10 opacity-100"
+      )}
+    >
       {/* Timeline line */}
       {!isLast && (
         <div className="absolute left-3 top-7 bottom-0 w-0.5 bg-border" />
