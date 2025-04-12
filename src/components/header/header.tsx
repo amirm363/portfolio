@@ -6,7 +6,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import useIsScrolled from "@/lib/hooks/use-is-scrolled";
 import dynamic from "next/dynamic";
-import { UserConfig } from "@/lib/types/user.types";
+import { NavigationLink } from "@/lib/types/user.types";
 import MobileHeader from "./mobile-header";
 
 const ThemeSwitcher = dynamic(() => import("./theme-switcher"), {
@@ -15,10 +15,10 @@ const ThemeSwitcher = dynamic(() => import("./theme-switcher"), {
 });
 
 interface HeaderProps {
-  user: UserConfig | undefined;
+  navigationLinks: NavigationLink[] | undefined;
 }
 
-export default function Header({ user }: HeaderProps) {
+export default function Header({ navigationLinks }: HeaderProps) {
   const { isScrolled, isScrollingUp } = useIsScrolled({ threshold: 50 });
 
   return (
@@ -44,7 +44,7 @@ export default function Header({ user }: HeaderProps) {
           />
         </Link>
         <div className="flex items-center gap-10 ">
-          {user?.navigationLinks.map((link, index) => (
+          {navigationLinks?.map((link, index) => (
             <a
               href={`#${link.url}`}
               key={index}
@@ -57,7 +57,7 @@ export default function Header({ user }: HeaderProps) {
         <ThemeSwitcher />
       </div>
 
-      <MobileHeader navigationLinks={user?.navigationLinks || []} />
+      <MobileHeader navigationLinks={navigationLinks || []} />
     </header>
   );
 }

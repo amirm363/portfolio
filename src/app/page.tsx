@@ -26,18 +26,15 @@ export default async function Home() {
         {/* <SectionWrapper className="min-h-0">
         </SectionWrapper> */}
 
-        <SectionWrapper id="experience" className="odd:bg-brand/10">
+        <SectionWrapper className="odd:bg-brand/10">
           <ExperienceSection experiences={user.experience} />
         </SectionWrapper>
 
-        <SectionWrapper id="projects" className="odd:bg-muted/30 py-0">
+        <SectionWrapper className="odd:bg-muted/30 py-0">
           <ProjectsSection projects={user.projects} />
         </SectionWrapper>
 
-        <SectionWrapper
-          id="contact"
-          className="flex flex-col min-h-dvh gap-10 odd:bg-brand/10"
-        >
+        <SectionWrapper className="flex flex-col min-h-dvh gap-10 odd:bg-brand/10">
           <ContactSection contactInfo={user.contactInfo} />
           <SkillsSection skills={user.skills} />
         </SectionWrapper>

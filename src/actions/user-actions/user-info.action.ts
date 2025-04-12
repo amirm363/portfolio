@@ -1,14 +1,15 @@
 "use server";
 
-import { getUserConfig } from "@/mock-db";
+import { UserConfig } from "@/lib/types/user.types";
+import { userConfig } from "@/mock-db";
 import { unstable_cache } from "next/cache";
 
 // Create a cached version of the getUserConfig function
 const getCachedUserConfig = unstable_cache(
-  async (userId: string) => {
+  async (userId: string, select?: Partial<Record<keyof UserConfig, boolean>>) => {
     try {
       console.log("EXPENSIVE OPERATION LOG");
-      return await getUserConfig(userId);
+      return await userConfig.findUnique(userId, select);
     } catch (error) {
       console.error("Error fetching user config:", error);
       throw new Error("Failed to get user config");
@@ -23,7 +24,7 @@ const getCachedUserConfig = unstable_cache(
   }
 );
 
-export async function getInfo() {
+export async function getInfo(select?: Partial<Record<keyof UserConfig, boolean>>) {
   const userId = process.env.USER_ID;
   if (!userId) {
     return undefined;
@@ -31,7 +32,7 @@ export async function getInfo() {
 
   try {
     // Use the cached function
-    const user = await getCachedUserConfig(userId);
+    const user = await getCachedUserConfig(userId, select);
     console.log("🚀 ~ get-info.action.ts:8 ~ getInfo ~ user:", user);
     return user;
   } catch (error) {

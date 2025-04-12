@@ -1,38 +1,50 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface UseIsScrolledProps {
   threshold?: number;
 }
 
-export default function useIsScrolled({ threshold = 50 }: UseIsScrolledProps) {
+export default function useIsScrolled({
+  threshold = 50,
+}: UseIsScrolledProps = {}) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isScrollingUp, setIsScrollingUp] = useState(true);
-  const [currentOffset, setCurrentOffset] = useState(0);
 
-  // Handle scroll effect for header
+  // Refs for tracking scroll position
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > threshold) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+
+    const updateScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Update isScrolled
+      setIsScrolled(currentScrollY > threshold);
+
+      // Update the scroll direction if the treshold is bigger than 5
+      if (Math.abs(currentScrollY - lastScrollY.current) > 5) {
+        setIsScrollingUp(currentScrollY < lastScrollY.current);
       }
-      if (offset < currentOffset) {
-        setIsScrollingUp(true);
-      } else {
-        setIsScrollingUp(false);
-      }
-      setCurrentOffset(offset);
+
+      lastScrollY.current = currentScrollY;
+      ticking.current = false;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          updateScroll();
+        });
+        ticking.current = true;
+      }
     };
-  }, [threshold, currentOffset]);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [threshold]);
 
   return { isScrolled, isScrollingUp };
 }

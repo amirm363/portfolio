@@ -145,9 +145,25 @@ const users: UserConfig[] = [
     ],
   },
 ];
+// TODO: add data filtering like include.
+export const userConfig = {
+  findUnique: async <UserConfigKey extends keyof UserConfig>(
+    id: string,
+    select?: Partial<Record<keyof UserConfig, boolean>>
+  ): Promise<Pick<UserConfig, UserConfigKey> | undefined> => {
+    const user = users.find((user) => user.id === id);
+    if (!user) return undefined;
 
-const getUserConfig = async (id: string): Promise<UserConfig | undefined> => {
-  return users.find((user) => user.id === id);
-};
+    if (!select) return user as Pick<UserConfig, UserConfigKey>;
 
-export { getUserConfig };
+    return Object.entries(select).reduce((acc, [key, value]) => {
+      if (value) {
+        (acc as Record<UserConfigKey, UserConfig[UserConfigKey]>)[key as UserConfigKey] = user[key as UserConfigKey] as UserConfig[UserConfigKey];
+      }
+      return acc;
+    }, {} as Pick<UserConfig, UserConfigKey>);
+  }
+}
+
+
+
