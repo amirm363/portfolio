@@ -8,8 +8,6 @@ import SkillsSection from "./_components/skills-section/main";
 
 export default async function Home() {
   const user = await userActions.getInfo();
-  // const user: UserConfig | undefined = undefined;
-  console.log("🚀 ~ page.tsx:7 ~ Home ~ user:", user);
   if (!user) {
     throw new Error("User not found");
   }

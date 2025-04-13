@@ -5,14 +5,14 @@ import { handleSessionStorage } from "@/lib/utils";
 
 type SubmitAction<T extends z.ZodTypeAny> = (data: z.infer<T>) => Promise<
   | {
-      error: string;
+    error: string;
 
-      success?: undefined;
-    }
+    success?: undefined;
+  }
   | {
-      success: boolean;
-      error?: undefined;
-    }
+    success: boolean;
+    error?: undefined;
+  }
 >;
 
 interface UseFormSubmitProps<FormSchema extends z.ZodTypeAny> {
@@ -72,13 +72,9 @@ export default function useFormSubmit<T extends z.ZodTypeAny>({
     try {
       // Validate data against schema
       const formObject = Object.fromEntries(data.entries());
-      console.log("Form data object:", formObject);
 
       const validatedData = schema.safeParse(formObject);
-      console.log(
-        "🚀 ~ use-form-submit.ts:74 ~ handleSubmit ~ validatedData:",
-        validatedData
-      );
+
       if (!validatedData.success) {
         setIsSuccess({
           success: false,

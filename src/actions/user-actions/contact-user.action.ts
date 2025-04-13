@@ -20,13 +20,10 @@ export async function contactUser(
   prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
-  console.log("🚀 ~ contact-user.action.ts:22 ~ prevState:", prevState);
   // Convert FormData to an object for validation
   const formObject = Object.fromEntries(formData.entries());
-  console.log("🚀 ~ contactUser ~ formObject:", formObject);
 
   const formValidation = contactSchema.safeParse(formObject);
-  console.log("🚀 ~ contact-user.action.ts:27 ~ formValidation:", formValidation);
 
   if (!formValidation.success) {
     // Extract Zod errors
@@ -49,7 +46,6 @@ export async function contactUser(
   }
 
   try {
-    console.log("Submitting contact data:", formValidation.data);
 
     const response = await fetch(
       `https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}`,
@@ -62,7 +58,7 @@ export async function contactUser(
         body: JSON.stringify({ fields: formValidation.data }),
       }
     );
-    console.log("🚀 ~ contact-user.action.ts:62 ~ response:", response);
+
     if (!response.ok) {
       throw new Error("Failed to send message");
     }

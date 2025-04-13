@@ -54,7 +54,7 @@ export default function ContactForm() {
   );
 
   useEffect(() => {
-    if (state.errors && state.formValues) {
+    if (!state.success && state.formValues) {
       const formValues = form.getValues();
       Object.keys(formValues).forEach((key) => {
         form.setValue(
@@ -63,7 +63,7 @@ export default function ContactForm() {
         );
       });
     }
-  }, [state, form]);
+  }, [state.success, state.formValues, form]);
 
   return (
     <>
