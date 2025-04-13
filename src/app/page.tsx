@@ -33,7 +33,7 @@ export default async function Home() {
         </SectionWrapper>
 
         <SectionWrapper className="flex flex-col min-h-dvh gap-10 odd:bg-brand/10">
-          <ContactSection contactInfo={user.contactInfo} />
+          <ContactSection />
           <SkillsSection skills={user.skills} />
         </SectionWrapper>
       </div>

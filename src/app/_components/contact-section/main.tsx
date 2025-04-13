@@ -1,14 +1,8 @@
 import React from "react";
 import ContactForm from "./contact-form";
 import ContactHeader from "./contact-header";
-import { ContactInfo } from "@/lib/types/user.types";
 
-interface ContactSectionProps {
-  contactInfo: ContactInfo;
-}
-
-function ContactSection({ contactInfo }: ContactSectionProps) {
-  console.log("🚀 ~ main.tsx:11 ~ ContactSection ~ contactInfo:", contactInfo);
+function ContactSection() {
   return (
     <div
       id="contact"

@@ -48,8 +48,9 @@ export default function MobileMenu({
               variant="invertGhostBrand"
               key={link.url}
               onClick={handleLinkClick}
+              asChild
             >
-              <Link href={`#${link.url}`} key={link.url}>
+              <Link href={`#${link.url}`} key={link.url} className="w-full">
                 {link.name}
               </Link>
             </Button>
