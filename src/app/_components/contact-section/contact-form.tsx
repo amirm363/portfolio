@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useCallback } from "react";
+import React, { useActionState, useCallback, useEffect, useMemo } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,7 +7,6 @@ import { contactSchema } from "@/lib/schemas/contact.schema";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import FormSubmitButton from "@/components/buttons/form-submit-button";
-// import useFormSubmit from "@/lib/hooks/use-form-submit";
 import { contactUser } from "@/actions/user-actions/contact-user.action";
 import SubmitStatus from "@/components/submit-status";
 import useSessionHook from "@/lib/hooks/use-session-hook";
@@ -22,8 +21,13 @@ export default function ContactForm() {
   const [state, formAction] = useActionState(contactUser, {
     success: false,
     message: "",
+    errors: {} as Record<keyof z.infer<typeof contactSchema>, string>,
+    formValues: {} as FormValues,
   });
-  const sessionValue = handleSessionStorage("get", formId);
+  const sessionValue = useMemo(
+    () => handleSessionStorage("get", formId),
+    [handleSessionStorage]
+  );
 
   const form = useForm<FormValues>({
     resolver: zodResolver(contactSchema),
@@ -49,11 +53,23 @@ export default function ContactForm() {
     [form, handleSessionStorage]
   );
 
+  useEffect(() => {
+    if (state.errors && state.formValues) {
+      const formValues = form.getValues();
+      Object.keys(formValues).forEach((key) => {
+        form.setValue(
+          key as keyof FormValues,
+          formValues[key as keyof FormValues]
+        );
+      });
+    }
+  }, [state, form]);
+
   return (
     <>
       <form action={formAction} className="space-y-6 w-full max-w-[400px]">
         <div className="space-y-4">
-          <FormInput label="Name" name="name">
+          <FormInput label="Name" name="name" error={state.errors?.name}>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <User className="h-4 w-4 text-muted-foreground" />
@@ -67,14 +83,9 @@ export default function ContactForm() {
                 onChange={handleChange}
               />
             </div>
-            {form.formState.errors.name && (
-              <p className="text-xs text-destructive mt-1">
-                {form.formState.errors.name.message}
-              </p>
-            )}
           </FormInput>
 
-          <FormInput label="Email" name="email">
+          <FormInput label="Email" name="email" error={state.errors?.email}>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Mail className="h-4 w-4 text-muted-foreground" />
@@ -88,14 +99,13 @@ export default function ContactForm() {
                 onChange={handleChange}
               />
             </div>
-            {form.formState.errors.email && (
-              <p className="text-xs text-destructive mt-1">
-                {form.formState.errors.email.message}
-              </p>
-            )}
           </FormInput>
 
-          <FormInput label="Message" name="message">
+          <FormInput
+            label="Message"
+            name="message"
+            error={state.errors?.message}
+          >
             <div className="relative">
               <div className="absolute top-3 left-3 pointer-events-none">
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
@@ -107,11 +117,6 @@ export default function ContactForm() {
                 {...form.register("message")}
                 onChange={handleChange}
               />
-              {form.formState.errors.message && (
-                <p className="text-xs text-destructive mt-1">
-                  {form.formState.errors.message.message}
-                </p>
-              )}
             </div>
           </FormInput>
         </div>

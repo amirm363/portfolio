@@ -30,7 +30,7 @@ export default async function Home() {
           <ExperienceSection experiences={user.experience} />
         </SectionWrapper>
 
-        <SectionWrapper className="odd:bg-muted/30 py-0">
+        <SectionWrapper className="odd:bg-muted/30">
           <ProjectsSection projects={user.projects} />
         </SectionWrapper>
 

@@ -8,6 +8,7 @@ interface ActionState {
   message: string;
   success: boolean;
   errors?: Record<keyof z.infer<typeof contactSchema>, string>;
+  formValues?: z.infer<typeof contactSchema>;
 }
 
 const airtableApiKey = process.env.AIRTABLE_API_KEY;
@@ -16,22 +17,23 @@ const airtableTableId = process.env.AIRTABLE_TABLE_ID;
 
 // Action signature matches useActionState: (previousState, formData)
 export async function contactUser(
-  prevState: ActionState, // Add prevState argument
-  formData: FormData // Change second argument to FormData
+  prevState: ActionState,
+  formData: FormData
 ): Promise<ActionState> {
+  console.log("🚀 ~ contact-user.action.ts:22 ~ prevState:", prevState);
   // Convert FormData to an object for validation
   const formObject = Object.fromEntries(formData.entries());
   console.log("🚀 ~ contactUser ~ formObject:", formObject);
 
-  const result = contactSchema.safeParse(formObject);
-  console.log("🚀 ~ contact-user.action.ts:27 ~ result:", result);
+  const formValidation = contactSchema.safeParse(formObject);
+  console.log("🚀 ~ contact-user.action.ts:27 ~ formValidation:", formValidation);
 
-  if (!result.success) {
+  if (!formValidation.success) {
     // Extract Zod errors
     const fieldErrors: Partial<
       Record<keyof z.infer<typeof contactSchema>, string>
     > = {};
-    result.error.issues.forEach((issue) => {
+    formValidation.error.issues.forEach((issue) => {
       const path = issue.path[0] as keyof z.infer<typeof contactSchema>;
       fieldErrors[path] = issue.message;
     });
@@ -42,13 +44,13 @@ export async function contactUser(
         keyof z.infer<typeof contactSchema>,
         string
       >,
+      formValues: formObject as z.infer<typeof contactSchema>,
     };
   }
 
   try {
-    console.log("Submitting contact data:", result.data);
-    // --- Add your actual submission logic here ---
-    // await sendContactEmail(result.data);
+    console.log("Submitting contact data:", formValidation.data);
+
     const response = await fetch(
       `https://api.airtable.com/v0/${airtableBaseId}/${airtableTableId}`,
       {
@@ -57,7 +59,7 @@ export async function contactUser(
           "Content-Type": "application/json",
           Authorization: `Bearer ${airtableApiKey}`,
         },
-        body: JSON.stringify({ fields: result.data }),
+        body: JSON.stringify({ fields: formValidation.data }),
       }
     );
     console.log("🚀 ~ contact-user.action.ts:62 ~ response:", response);
@@ -72,6 +74,7 @@ export async function contactUser(
     return {
       success: false,
       message: "An unexpected error occurred on the server.",
+      formValues: formObject as z.infer<typeof contactSchema>,
     };
   }
 }

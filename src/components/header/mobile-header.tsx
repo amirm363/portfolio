@@ -17,7 +17,7 @@ export default function MobileHeader({ navigationLinks }: MobileHeaderProps) {
   return (
     <div className="md:hidden flex items-center justify-between w-full">
       <MobileMenu navigationLinks={navigationLinks}>
-        <MenuIcon />
+        <MenuIcon className="cursor-pointer" />
       </MobileMenu>
       <ThemeSwitcher />
     </div>

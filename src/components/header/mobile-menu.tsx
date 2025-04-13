@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -20,8 +20,14 @@ export default function MobileMenu({
   navigationLinks,
   children,
 }: MobileMenuProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
+
   return (
-    <Sheet>
+    <Sheet onOpenChange={setOpen} open={open}>
       <SheetTrigger>{children}</SheetTrigger>
       <SheetContent side="left" className="py-10">
         <SheetHeader className="flex flex-col items-center justify-center gap-4 pt-0">
@@ -38,7 +44,11 @@ export default function MobileMenu({
         </SheetHeader>
         <div className="flex flex-col gap-4 px-4">
           {navigationLinks.map((link) => (
-            <Button variant="invertGhostBrand" key={link.url}>
+            <Button
+              variant="invertGhostBrand"
+              key={link.url}
+              onClick={handleLinkClick}
+            >
               <Link href={`#${link.url}`} key={link.url}>
                 {link.name}
               </Link>
