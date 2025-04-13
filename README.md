@@ -21,27 +21,6 @@ A modern and responsive portfolio landing page template built with Next.js, Type
 - **Linting/Formatting:** ESLint
 - **Package Manager:** pnpm
 
-## Project Structure
-
-```
-.
-├── public/             # Static assets (images, fonts)
-├── src/
-│   ├── app/            # Next.js App Router pages and layouts
-│   │   ├── api/        # API routes (e.g., contact form submission)
-│   │   └── sections/   # Reusable page sections (Header, Hero, Projects, etc.)
-│   ├── components/     # Reusable UI components (atoms, molecules, organisms)
-│   ├── lib/            # Utility functions, hooks, type definitions
-│   ├── actions/        # Server actions (e.g., form handling, data fetching)
-│   └── styles/         # Global styles (if any)
-├── .env.local          # Environment variables (needs creation)
-├── components.json     # shadcn/ui configuration
-├── next.config.ts      # Next.js configuration
-├── package.json        # Project dependencies and scripts
-├── pnpm-lock.yaml      # pnpm lock file
-├── tailwind.config.ts  # Tailwind CSS configuration
-└── tsconfig.json       # TypeScript configuration
-```
 
 ## Getting Started
 
@@ -50,7 +29,7 @@ Follow these instructions to set up and run the project locally.
 ### Prerequisites
 
 - Node.js (v20 or later recommended)
-- pnpm (v9.0.4 or later recommended install: `npm install -g pnpm`)
+- pnpm (install: `npm install -g pnpm`)
 
 ### Installation
 
@@ -99,9 +78,3 @@ Follow these instructions to set up and run the project locally.
 - `pnpm build`: Creates a production build of the application.
 - `pnpm start`: Starts the production server (requires `pnpm build` first).
 - `pnpm lint`: Lints the codebase using Next.js ESLint configuration.
-
-## Deployment
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
