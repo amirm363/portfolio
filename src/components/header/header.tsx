@@ -43,7 +43,7 @@ export default function Header({ navigationLinks }: HeaderProps) {
             className="rounded-full"
           />
         </Link>
-        <div className="flex items-center gap-10 ">
+        <nav className="flex items-center gap-10 ">
           {navigationLinks?.map((link, index) => (
             <a
               href={`#${link.url}`}
@@ -53,7 +53,7 @@ export default function Header({ navigationLinks }: HeaderProps) {
               {link.name}
             </a>
           ))}
-        </div>
+        </nav>
         <ThemeSwitcher />
       </div>
 

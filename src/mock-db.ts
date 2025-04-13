@@ -35,7 +35,9 @@ const users: UserConfig[] = [
       },
     ],
     profilePicture: "/images/profile-pic.png",
-    bio: "I am a full stack developer with a passion for building scalable and efficient web applications.",
+    bio: `Crafting responsive web applications with modern technologies. I
+        specialize in building exceptional digital experiences with React,
+        Next.js, and Node.js.`,
     skills: [
       {
         name: "React",

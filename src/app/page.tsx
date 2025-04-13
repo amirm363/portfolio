@@ -1,7 +1,7 @@
 import HeroSection from "./_components/hero-section/main";
 import { userActions } from "@/actions/user-actions";
 import ContactSection from "./_components/contact-section/main";
-import ProjectsSection from "./_components/projects-section/projects-section";
+import ProjectsSection from "./_components/projects-section/main";
 import ExperienceSection from "./_components/experience-section/main";
 import SectionWrapper from "./_components/section-wrapper";
 import SkillsSection from "./_components/skills-section/main";

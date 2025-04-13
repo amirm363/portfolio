@@ -21,11 +21,7 @@ export default function HeroContent({ user }: HeroContentProps) {
         </h2>
       </div>
 
-      <p className="text-lg text-muted-foreground max-w-[95vw]">
-        Crafting responsive web applications with modern technologies. I
-        specialize in building exceptional digital experiences with React,
-        Next.js, and Node.js.
-      </p>
+      <p className="text-lg text-muted-foreground max-w-[95vw]">{user.bio}</p>
 
       <div className="flex flex-wrap gap-4 justify-center md:justify-start">
         <Button variant="brand" size="lg" asChild>
