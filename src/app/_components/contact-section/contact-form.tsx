@@ -63,7 +63,11 @@ export default function ContactForm() {
         );
       });
     }
-  }, [state.success, state.formValues, form]);
+    if (state.success) {
+      form.reset();
+      handleSessionStorage("remove", formId);
+    }
+  }, [state.success, state.formValues, form, handleSessionStorage]);
 
   return (
     <>
