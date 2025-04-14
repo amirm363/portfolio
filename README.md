@@ -60,7 +60,7 @@ Follow these instructions to set up and run the project locally.
     ```
 
     *   `USER_ID`: Might be used in actions like `src/actions/user-actions/user-info.action.ts` to fetch specific data. Define how you manage user data.
-    *   `AIRTABLE_*`: These seem to be used in `src/actions/user-actions/contact-user.action.ts`. If you intend to use Airtable for the contact form, provide your credentials here. Otherwise, you might need to modify the contact action.
+    *   `AIRTABLE_*`: Are being used in `src/actions/user-actions/contact-user.action.ts`. If you intend to use Airtable for the contact form, provide your credentials here. Otherwise, you might need to modify the contact action.
 
 ### Running Locally
 
