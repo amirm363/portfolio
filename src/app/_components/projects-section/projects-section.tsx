@@ -1,7 +1,7 @@
 import React from "react";
 import ProjectsGrid from "./projects-grid";
 import { Project } from "@/lib/types/user.types";
-
+import ProjectsHeader from "./projects-header";
 interface ProjectsSectionProps {
   projects: Project[];
   title?: string;
@@ -19,11 +19,7 @@ export default function ProjectsSection({
       className="min-h-dvh flex w-full flex-col items-center justify-center  "
     >
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-3">{title}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">{subtitle}</p>
-        </div>
-
+        <ProjectsHeader title={title} subtitle={subtitle} />
         <ProjectsGrid projects={projects} />
       </div>
     </section>

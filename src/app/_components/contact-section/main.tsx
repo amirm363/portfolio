@@ -2,6 +2,7 @@ import React from "react";
 import ContactForm from "./contact-form";
 import ContactHeader from "./contact-header";
 
+// This is the "contact us" section
 function ContactSection() {
   return (
     <div
