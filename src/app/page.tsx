@@ -12,7 +12,7 @@ export default async function Home() {
     throw new Error("User not found");
   }
   return (
-    <main className="h-dvh ">
+    <main className="min-h-dvh ">
       <div>
         <SectionWrapper
           id="about"

@@ -24,26 +24,30 @@ export default function ContactForm() {
     errors: {} as Record<keyof z.infer<typeof contactSchema>, string>,
     formValues: {} as FormValues,
   });
-  const sessionValue = useMemo(
+
+  // Gets the form values (if there are any) from session storage
+  const sessionFormValue = useMemo(
     () => handleSessionStorage("get", formId),
     [handleSessionStorage]
   );
 
+  // Creates the form
   const form = useForm<FormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: React.useMemo(() => {
       return {
-        ...(sessionValue
-          ? JSON.parse(sessionValue as string)
+        ...(sessionFormValue
+          ? JSON.parse(sessionFormValue as string)
           : {
               name: "",
               email: "",
               message: "",
             }),
       };
-    }, [sessionValue]),
+    }, [sessionFormValue]),
   });
 
+  // Handles the form input changes and also updated the values in the session storage
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -53,17 +57,32 @@ export default function ContactForm() {
     [form, handleSessionStorage]
   );
 
+  // Handles the form submission and checks if the action failed or succeeded
   useEffect(() => {
-    if (!state.success && state.formValues) {
-      const formValues = form.getValues();
-      Object.keys(formValues).forEach((key) => {
-        form.setValue(
-          key as keyof FormValues,
-          formValues[key as keyof FormValues]
-        );
+    // Condition 1: Action failed, reset form to the returned values
+    if (
+      !state.success &&
+      state.formValues &&
+      Object.keys(state.formValues).length > 0
+    ) {
+      // Iterate over the values returned from the failed action state
+      Object.entries(state.formValues).forEach(([key, value]) => {
+        // Ensure value is not undefined before setting
+        if (value !== undefined) {
+          form.setValue(key as keyof FormValues, value);
+        }
       });
+      // Optionally, update session storage with these potentially corrected values
+      handleSessionStorage("set", formId, JSON.stringify(state.formValues));
     }
-  }, [state.success, state.formValues, form]);
+    // Condition 2: Action succeeded, clear the form and storage
+    else if (state.success) {
+      // Use else if to prevent running both conditions potentially
+      form.reset(); // Reset to default values (or empty if no defaults)
+      // Remove the form values from session storage
+      handleSessionStorage("remove", formId);
+    }
+  }, [state.success, state.formValues, form, handleSessionStorage]);
 
   return (
     <>

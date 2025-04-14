@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -31,16 +32,20 @@ export default function MobileMenu({
       <SheetTrigger>{children}</SheetTrigger>
       <SheetContent side="left" className="py-10">
         <SheetHeader className="flex flex-col items-center justify-center gap-4 pt-0">
-          <Link href="/">
+          <Link href="/" onClick={handleLinkClick}>
             <Image
               src="/images/logo.png"
               alt="Logo"
               width={100}
               height={100}
+              priority
               className="rounded-full"
             />
           </Link>
           <SheetTitle className="sr-only">Menu</SheetTitle>
+          <SheetDescription className="sr-only">
+            Menu for mobile
+          </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4 px-4">
           {navigationLinks.map((link) => (
